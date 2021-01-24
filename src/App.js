@@ -1,9 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import store from "./store"
+import {unsubscribe} from "./store"
 
 function App() {
-  console.log(store);
+  console.log(store.getState());
+  store.dispatch({
+    type:"bugRemove",
+    payload:{
+      id: 1
+    }
+  })
+  unsubscribe();
   return (
     <div className="App">
       <header className="App-header">
