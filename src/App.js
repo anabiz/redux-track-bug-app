@@ -12,11 +12,11 @@ function App() {
   const [allbugs, setAllbugs] = useState([])
   const [project, setProject] = useState("")
   useEffect(() => {
-    setAllbugs(store.getState().bugs);
+    setAllbugs(store.getState().entities.bugs);
   }, [store])
 
   const unsubscribe = store.subscribe(() => {
-    setAllbugs(store.getState().bugs);
+    setAllbugs(store.getState().entities.bugs);
   })
 
   const resolveBug = () => {
@@ -24,7 +24,7 @@ function App() {
   }
   const addBug = () => {
     store.dispatch(bugAdded({description:description}));
-    setAllbugs(store.getState().bugs);
+    setAllbugs(store.getState().entities.bugs);
   }
   const addProject = () => {
     store.dispatch(projectAdded({name:project}));
