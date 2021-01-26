@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import store from "./store";
-import { unsubscribe } from "./store";
-import { bugAdded, bugResolved } from "./actions";
+import store from "./store/store";
+import { unsubscribe } from "./store/store";
+import { bugAdded, bugResolved } from "./store/bug";
 import react, { useEffect, useState } from "react"
 
 function App() {
