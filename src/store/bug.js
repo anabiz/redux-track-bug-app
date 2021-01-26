@@ -1,28 +1,59 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer, createSlice } from "@reduxjs/toolkit";
 
-//Action creators
-export const bugAdded = createAction("bugAdded");
-export const bugResolved = createAction("bugResolved");
-export const bugRemoved = createAction("bugRemoved");  
-
+//<-------------solution 3------------->
 let lastId = 0;
-export default createReducer([],{
-    //key: value
-    //actions: function
-    [bugAdded.type]:(state, action) =>{
-        state.push({
-            id: ++lastId,
-            description: action.payload.description,
-            resolved: false
-        });
-    },
+const slice = createSlice({
+    name: 'bugs',
+    initialState: [],
+    reducers: {
+        //maps actions to action handlers
+        bugAdded: (bugs, action) => {
+            bugs.push({
+                id: ++lastId,
+                description: action.payload.description,
+                resolved: false
+            });
+        },
+        bugResolved: (bugs, action) => {
+            const index = bugs.findIndex(bug => bug.id === action.payload.id);
+            bugs[index].resolved = true;
+        }
 
-    [bugResolved.type]: (state, action) => {
-        const index = state.findIndex(bug => bug.id === action.payload.id);
-        state[index].resolved = true;
     }
 })
 
+export const {bugAdded, bugResolved} = slice.actions;
+
+export default slice.reducer;
+
+
+
+
+//<--------------solution 2------------------------>
+// //Action creators
+// export const bugAdded = createAction("bugAdded");
+// export const bugResolved = createAction("bugResolved");
+// export const bugRemoved = createAction("bugRemoved");  
+
+// let lastId = 0;
+// export default createReducer([],{
+//     //key: value
+//     //actions: function
+//     [bugAdded.type]:(state, action) =>{
+//         state.push({
+//             id: ++lastId,
+//             description: action.payload.description,
+//             resolved: false
+//         });
+//     },
+
+//     [bugResolved.type]: (state, action) => {
+//         const index = state.findIndex(bug => bug.id === action.payload.id);
+//         state[index].resolved = true;
+//     }
+// })
+
+//<-----------solution 1--------------->
 // //Action types
 // const BUG_ADDED = "bugAdded";
 // const BUG_REMOVED = "bugRemoved"; 
