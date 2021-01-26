@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import store from "./store/store";
-import { unsubscribe } from "./store/store";
+import {store} from "./store/configureStore";
+import { unsubscribe } from "./store/configureStore";
 import { bugAdded, bugResolved } from "./store/bug";
 import react, { useEffect, useState } from "react"
 
@@ -18,12 +18,12 @@ function App() {
   })
 
   const resolveBug = () => {
-    store.dispatch(bugResolved(Number(id)));
+    store.dispatch(bugResolved({id:Number(id)}));
   }
   const addBug = () => {
-    store.dispatch(bugAdded(description));
+    store.dispatch(bugAdded({description:description}));
+    setAllbugs(store.getState());
   }
-  //const handleChange =()=> setId()
 
   //unsubscribe();
   return (
