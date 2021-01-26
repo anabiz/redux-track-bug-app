@@ -1,33 +1,47 @@
 import logo from './logo.svg';
 import './App.css';
-import store from "./store"
-import {unsubscribe} from "./store"
+import store from "./store";
+import { unsubscribe } from "./store";
+import { bugAdded, bugResolved } from "./actions";
+import react, { useEffect, useState } from "react"
 
 function App() {
-  console.log(store.getState());
-  store.dispatch({
-    type:"bugRemove",
-    payload:{
-      id: 1
-    }
+  const [id, setId] = useState("");
+  const [description, setDescription] = useState("");
+  const [allbugs, setAllbugs] = useState([])
+  useEffect(() => {
+    setAllbugs(store.getState());
+  }, [store])
+
+  const unsubscribe = store.subscribe(() => {
+    setAllbugs(store.getState());
   })
-  unsubscribe();
+
+  const resolveBug = () => {
+    store.dispatch(bugResolved(Number(id)));
+  }
+  const addBug = () => {
+    store.dispatch(bugAdded(description));
+  }
+  //const handleChange =()=> setId()
+
+  //unsubscribe();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <input placeholder="enter bug id" value={id} onChange={(e) => setId(e.target.value)}></input>
+      <button onClick={resolveBug}>
+        Resolve Bug
+      </button>
+
+      <input placeholder="enter bug id" value={description} onChange={(e) => setDescription(e.target.value)}></input>
+      <button onClick={addBug}>
+        Add Bug
+      </button>
+      <div>
+        {allbugs.map(bug => (<div key={bug.id}><p>{bug.id}</p><p>{bug.description}</p> <p>{bug.resolved.toString()}</p><hr></hr></div> ))}
+      </div>
+
     </div>
   );
 }
