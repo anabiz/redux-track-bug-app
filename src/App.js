@@ -4,13 +4,20 @@ import {store} from "./store/configureStore";
 import { unsubscribe } from "./store/configureStore";
 import { bugAdded, bugResolved,getUnresolvedBugs } from "./store/bug";
 import { projectAdded } from "./store/projects";
-import react, { useEffect, useState } from "react"
+import { userAdded } from "./store/users"
+import react, { useEffect, useState } from "react";
+
+const addUser = (user) => {
+  store.dispatch(userAdded({name:user}));
+  console.log(store.getState().entities.users);
+}
 
 function App() {
   const [id, setId] = useState("");
   const [description, setDescription] = useState("");
-  const [allbugs, setAllbugs] = useState([])
-  const [project, setProject] = useState("")
+  const [allbugs, setAllbugs] = useState([]);
+  const [project, setProject] = useState("");
+  const [user, setUser] = useState("")
   useEffect(() => {
     setAllbugs(store.getState().entities.bugs);
   }, [store])
@@ -49,6 +56,11 @@ function App() {
       <input placeholder="name" value={project} onChange={(e) => setProject(e.target.value)}></input>
       <button onClick={addProject}>
         Add project
+      </button>
+
+      <input placeholder="name" value={user} onChange={(e) => setUser(e.target.value)}></input>
+      <button onClick={() => addUser(user)}>
+        Add User
       </button>
 
       <div>
