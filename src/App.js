@@ -24,6 +24,7 @@ function App() {
 
   const unsubscribe = store.subscribe(() => {
     setAllbugs(store.getState().entities.bugs);
+    console.log("changes occured");
   })
 
   const resolveBug = () => {

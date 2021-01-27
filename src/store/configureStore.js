@@ -1,4 +1,4 @@
-//import { createStore } from "redux";
+//import { createStore, applyMiddleware } from "redux";
 //import reducer from "./bug";
 import reducer from "./reducers";
 import { configureStore } from "@reduxjs/toolkit";
@@ -9,9 +9,13 @@ import logger from "./middleware/logger"
 //     return configureStore({ reducer });
 // }; 
 
+//registering middleware with just redux, that is without redux/toolkit
+//export default store = createStore(reducer, applyMiddleWare(logger));
+
+//register middleware with reduxjs/toolkit and passing it parameter
 export const store = configureStore({ 
     reducer,
-    middleware: [logger] 
+    middleware: [logger({destination: "console"})] 
 });
 
 // export const unsubscribe = createAppStore().subscribe(()=>{
