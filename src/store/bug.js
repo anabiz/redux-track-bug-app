@@ -1,4 +1,5 @@
 import { createAction, createReducer, createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 
 //<-------------solution 3------------->
 let lastId = 0;
@@ -27,7 +28,14 @@ export const {bugAdded, bugResolved} = slice.actions;
 export default slice.reducer;
 
 //selector function
-export const getUnresolvedBugs = state => state.entities.bugs.filter(bug => !bug.resolved);
+//export const getUnresolvedBugs = state => state.entities.bugs.filter(bug => !bug.resolved);
+
+//using memorization to create selector function, that is using cache
+export const getUnresolvedBugs = createSelector(
+    state => state.entities.bugs,
+    bugs => bugs.filter(bug => !bug.resolved)
+)
+
 
 
 
