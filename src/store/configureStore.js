@@ -4,6 +4,7 @@ import reducer from "./reducers";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "./middleware/logger";
 import func from "./middleware/func";
+import toast from "./middleware/toast";
 //import { devToolsEnhancer } from "redux-devtools-extension"
 
 // export default function (){
@@ -16,7 +17,11 @@ import func from "./middleware/func";
 //register middleware with reduxjs/toolkit and passing it parameter
 export const store = configureStore({ 
     reducer,
-    middleware: [ ...getDefaultMiddleware(), logger({destination: "console"})] 
+    middleware: [ 
+        ...getDefaultMiddleware(),
+        logger({destination: "console"}),
+        toast
+    ] 
 });
 
 // export const unsubscribe = createAppStore().subscribe(()=>{

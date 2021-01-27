@@ -6,6 +6,8 @@ import { bugAdded, bugResolved,getUnresolvedBugs, bugAssignedToUser, getBugsByUs
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users"
 import react, { useEffect, useState } from "react";
+import Toast from "./toast/toast";
+import { toast } from 'react-toastify';
 
 const addUser = (user) => {
   store.dispatch(userAdded({name:user}));
@@ -27,16 +29,23 @@ function App() {
     console.log("changes occured");
   })
  
+  const notify = () => toast(`bug ${id} resolved!`);
 
   const resolveBug = () => {
     store.dispatch(bugResolved({id:Number(id)}));
-    console.log(getUnresolvedBugs(store.getState()))
+    console.log(getUnresolvedBugs(store.getState()));
+    notify();
   }
   const addBug = () => {
     store.dispatch(bugAdded({description:description}));
     unsubscribe();
     setAllbugs(store.getState().entities.bugs);
-
+    store.dispatch({
+      type:"error",
+      payload:{
+        message:"An error occured"
+      }
+    })
     store.dispatch((dispatch, getState)=>{
       //call an Api
       //when the promise is resolved => dispatch()
@@ -77,8 +86,9 @@ function App() {
       <div>
         {allbugs.length > 0 ? allbugs.map(bug => (<div key={bug.id}><p>{bug.id}</p><p>{bug.description}</p> <p>{bug.resolved.toString()}</p><hr></hr></div> )) : null}
       </div>
-
+      <Toast />
     </div>
+   
   );
 }
 
