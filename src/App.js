@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {store} from "./store/configureStore";
 import { unsubscribe } from "./store/configureStore";
-import { bugAdded, bugResolved,getUnresolvedBugs } from "./store/bug";
+import { bugAdded, bugResolved,getUnresolvedBugs, bugAssignedToUser, getBugsByUser } from "./store/bug";
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users"
 import react, { useEffect, useState } from "react";
