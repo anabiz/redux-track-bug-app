@@ -26,6 +26,7 @@ function App() {
     setAllbugs(store.getState().entities.bugs);
     console.log("changes occured");
   })
+ 
 
   const resolveBug = () => {
     store.dispatch(bugResolved({id:Number(id)}));
@@ -33,7 +34,16 @@ function App() {
   }
   const addBug = () => {
     store.dispatch(bugAdded({description:description}));
+    unsubscribe();
     setAllbugs(store.getState().entities.bugs);
+
+    store.dispatch((dispatch, getState)=>{
+      //call an Api
+      //when the promise is resolved => dispatch()
+      dispatch({type: "bugsReceived", bugs:[1,2,3]});
+      console.log(getState())
+      //if promise failed => dispatch()
+    })
   }
   const addProject = () => {
     store.dispatch(projectAdded({name:project}));
