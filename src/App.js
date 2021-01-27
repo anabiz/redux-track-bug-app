@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {store} from "./store/configureStore";
 import { unsubscribe } from "./store/configureStore";
-import { bugAdded, bugResolved } from "./store/bug";
+import { bugAdded, bugResolved,getUnresolvedBugs } from "./store/bug";
 import { projectAdded } from "./store/projects";
 import react, { useEffect, useState } from "react"
 
@@ -21,6 +21,7 @@ function App() {
 
   const resolveBug = () => {
     store.dispatch(bugResolved({id:Number(id)}));
+    console.log(getUnresolvedBugs(store.getState()))
   }
   const addBug = () => {
     store.dispatch(bugAdded({description:description}));

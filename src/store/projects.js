@@ -6,8 +6,8 @@ const slice = createSlice({
     initialState: [],
     reducers: {
         //maps actions to action handlers
-        projectAdded: (bugs, action) => {
-            bugs.push({
+        projectAdded: (projects, action) => {
+            projects.push({
                 id: ++lastId,
                 name: action.payload.name,
             });
@@ -16,6 +16,6 @@ const slice = createSlice({
     }
 })
 
-export const {projectAdded} = slice.actions;
+export const { projectAdded } = slice.actions;
 
 export default slice.reducer;
